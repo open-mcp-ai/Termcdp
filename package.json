@@ -1,0 +1,58 @@
+{
+  "name": "@open-mcp-ai/termcdp",
+  "version": "0.0.1",
+  "description": "Zero-dependency CDP console: cross-machine SOCKS5 transport + multi-instance aggregation + MCP interface (every payload travels as a receipt + result id)",
+  "type": "module",
+  "bin": {
+    "termcdp": "bin/termcdp.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "bundle": "node scripts/bundle.mjs",
+    "verify": "node test/run-all.js",
+    "verify:p0": "node test/verify-p0.js",
+    "verify:p1": "node test/verify-p1.js",
+    "verify:p2": "node test/verify-p2.js",
+    "verify:p3": "node test/verify-p3.js",
+    "verify:mcp-client": "node test/verify-mcp-client.js",
+    "verify:disconnect": "node test/verify-disconnect.js"
+  },
+  "keywords": [
+    "cdp",
+    "chrome-devtools-protocol",
+    "devtools",
+    "mcp",
+    "model-context-protocol",
+    "socks5",
+    "browser-automation",
+    "remote-debugging",
+    "v8-inspector",
+    "nodejs",
+    "zero-dependencies"
+  ],
+  "author": "open-mcp-ai",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-mcp-ai/termcdp.git"
+  },
+  "homepage": "https://github.com/open-mcp-ai/termcdp#readme",
+  "bugs": {
+    "url": "https://github.com/open-mcp-ai/termcdp/issues"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1"
+  }
+}
