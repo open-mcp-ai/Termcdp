@@ -147,6 +147,8 @@ function createDispatcher({ registry, actor = 'local' }) {
         return registry.read(params)
       case 'results':
         return registry.resultIndex(params)
+      case 'fetch':
+        return registry.fetch(params)
       case 'protocol':
         return registry.protocol(params)
       default: {

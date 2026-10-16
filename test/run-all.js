@@ -16,6 +16,7 @@ const SUITES = [
   ['p1', 'CDP 核心：autoAttach / 事件日志 / 重连+状态重放 / 流式大对象'],
   ['p2', '引擎：两个真实浏览器(直连+经SOCKS5) 聚合 / 审计 / 真实 CLI 一次性调用'],
   ['p3', 'MCP（真实子进程 stdio）+ 入口收敛：只剩 mcp'],
+  ['fetch', 'fetch 动词：URL 拉进 result store → 注入页面（字节不过 agent context）'],
   ['mcp-client', '集成：官方 @modelcontextprotocol/sdk 客户端真连一次（dev 依赖，未安装则跳过）'],
   ['disconnect', '断开/删除语义：disconnect 是粘的、remove 无噪声、意外断开仍标 dead'],
 ]

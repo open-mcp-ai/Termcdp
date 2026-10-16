@@ -227,6 +227,26 @@ export const COMMANDS = [
     returns: '{results:[receipts], latest, store:{count,bytes,maxBytes,seq,evicted}}',
   },
   {
+    name: 'fetch',
+    summary:
+      'Download a URL **into this process\'s result store** (http/https only), so the bytes never travel through the model: you get a receipt ' +
+      'and page the body with read. This is the download half of "inject a remote script into a page" — fetch it, then pass the source to ' +
+      'Runtime.evaluate (or Page.addScriptToEvaluateOnNewDocument) without pasting the file into your context. ' +
+      'Do it here rather than letting the page fetch it: a page-side fetch or <script src> is blocked by the page CSP and needs CORS. ' +
+      'Nothing is written to disk — the store is in memory and the payload dies with the process',
+    params: {
+      url: { type: 'string', required: true, desc: 'absolute http/https URL (file:/data: are refused: this runs on the host, not in the page)' },
+      inlineBytes: { type: 'number', desc: 'whole body inlined in the receipt when it fits this many bytes (default 4096)', default: 4096 },
+      maxBytes: { type: 'number', desc: 'refuse (never truncate) above this size, default 64MiB — the store holds payloads in memory', default: 64 * 1024 * 1024 },
+      timeoutMs: { type: 'number', desc: 'request timeout, default 30000', default: 30_000 },
+      headers: { type: 'object', desc: 'extra request headers' },
+    },
+    examples: [ex('fetch', { url: 'http://localhost:18765/api/sessions/abc123/files/download?path=%2Ftmp%2Fa.js' })],
+    returns:
+      'A **receipt**: {resultId, instance: "fetch", method: "fetch", url, contentType, at, bytes, sha256, data?}. ' +
+      'The body lives in the result store — page it with read by resultId, or hand the whole thing to a Runtime.evaluate expression',
+  },
+  {
     name: 'protocol',
     summary:
       'Fetch the **live** CDP protocol signature from the browser itself (its /json/protocol endpoint, not something we hardcode). ' +

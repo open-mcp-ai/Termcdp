@@ -37,6 +37,7 @@ import { TermcdpError } from './errors.js'
 import { PATH_RESERVED } from '../protocol/paths.js'
 import * as routing from './routing.js'
 import { wireOn, unwire, cancelReconnect } from './event-wiring.js'
+import { fetchUrl } from './fetch.js'
 
 const firstLine = (s) => String(s ?? '').replace(/\s+/g, ' ').trim().split(/(?<=\.)\s/)[0].slice(0, 200)
 
@@ -306,6 +307,12 @@ export class Registry extends EventEmitter {
 
   resultIndex(opts) {
     return listResults(this.results, opts)
+  }
+
+  // ---------- Fetch: pull a URL into the store (no instance involved) ----------
+
+  async fetch(opts) {
+    return fetchUrl(this, opts)
   }
 
   // ---------- Events and protocol ----------

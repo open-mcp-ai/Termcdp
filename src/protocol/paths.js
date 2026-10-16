@@ -152,6 +152,25 @@ const ROOT_VERBS = {
     ],
     bind: (a) => ({ action: a.action ?? 'list', ...(a.name !== undefined ? { name: a.name } : {}), ...(a.spec !== undefined ? { spec: a.spec } : {}) }),
   },
+  fetch: {
+    name: 'fetch',
+    kind: 'call',
+    command: 'fetch',
+    summary:
+      'Download a URL into this process\'s result store (http/https) and get a **receipt** instead of the bytes — the download half of "inject a remote script into a page": ' +
+      'fetch it, then pass the source to Runtime.evaluate without pasting the file into your context. Do it here rather than in the page: a page-side fetch or <script src> is blocked by the page\'s CSP. Nothing is written to disk',
+    args: [
+      { name: 'url', type: 'string', required: true, desc: 'absolute http/https URL (file:/data: are refused — this runs on the host, not in the page)' },
+      { name: 'opts', type: 'object', desc: '{inlineBytes? (default 4096), maxBytes? (default 64MiB, refused rather than truncated), timeoutMs? (default 30000), headers?}' },
+    ],
+    returns: 'A **receipt** {resultId, instance: "fetch", method: "fetch", url, contentType, bytes, sha256, data?} — body in the result store, page it with `read`',
+    examples: [
+      'invoke("fetch", "https://cdn.example.com/lib.js")',
+      'invoke("fetch", "http://localhost:18765/api/sessions/abc123/files/download?path=%2Ftmp%2Fa.js")',
+    ],
+    // opts is spread flat: the engine command takes flat params (same as `targets` / `events`)
+    bind: (a) => ({ url: a.url, ...(a.opts ?? {}) }),
+  },
   events: {
     name: 'events',
     kind: 'call',

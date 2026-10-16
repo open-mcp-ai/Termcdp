@@ -20,6 +20,7 @@
     "verify:p1": "node test/verify-p1.js",
     "verify:p2": "node test/verify-p2.js",
     "verify:p3": "node test/verify-p3.js",
+    "verify:fetch": "node test/verify-fetch.js",
     "verify:mcp-client": "node test/verify-mcp-client.js",
     "verify:disconnect": "node test/verify-disconnect.js"
   },
